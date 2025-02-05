@@ -4,7 +4,8 @@ import 'package:url_launcher/url_launcher.dart';
 extension NumeroDeTelefonoExtension on NumeroDeTelefono {
   void abrirEnWhatsApp() {
     // Ejemplo de mandar whats app con una mensaje de texto predefinido
-    final url = Uri.parse('https://wa.me/$numeroDeTelefonoPlano?text=hola');
+    final url =
+        Uri.parse('https://wa.me/$numeroDeTelefonoPlano?text=$mensajeInicial');
     launchUrl(url);
   }
 

@@ -26,6 +26,7 @@ class _PaginaAgregarNumerosState extends State<PaginaAgregarNumeros> {
   final _maskNumero = MaskTextInputFormatter(mask: '(+51) ### ### ###');
   final _numeroTelefonoController = TextEditingController();
   final _descripcionController = TextEditingController();
+  final _mensajeInicialController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +54,10 @@ class _PaginaAgregarNumerosState extends State<PaginaAgregarNumeros> {
               validator: (valor) =>
                   RequiredValidator(errorText: 'La descripcion es requerida')
                       .call(valor),
+            ),
+            InputPersonalizado(
+              label: 'Mensaje inicial',
+              controller: _mensajeInicialController,
             ),
             ElevatedButton.icon(
               onPressed: () {
@@ -107,12 +112,14 @@ class _PaginaAgregarNumerosState extends State<PaginaAgregarNumeros> {
       } else {
         final id = Uuid().v1();
         final descripcion = _descripcionController.text;
+        final mensajeInicial =
+            _mensajeInicialController.text.replaceAll(' ', '%20');
         final numeroDeTelefono = NumeroDeTelefono(
-          id: id,
-          numeroDeTelefonoPlano: numeroPlano,
-          numeroDeTelefonoFormateado: numeroConFormato,
-          descripcion: descripcion,
-        );
+            id: id,
+            numeroDeTelefonoPlano: numeroPlano,
+            numeroDeTelefonoFormateado: numeroConFormato,
+            descripcion: descripcion,
+            mensajeInicial: mensajeInicial);
 
         widget.alAgregar(numeroDeTelefono);
 
@@ -120,6 +127,7 @@ class _PaginaAgregarNumerosState extends State<PaginaAgregarNumeros> {
 
         _numeroTelefonoController.clear();
         _descripcionController.clear();
+        _mensajeInicialController.clear();
       }
       FocusManager.instance.primaryFocus?.unfocus();
     }
@@ -129,6 +137,7 @@ class _PaginaAgregarNumerosState extends State<PaginaAgregarNumeros> {
   void dispose() {
     _numeroTelefonoController.dispose();
     _descripcionController.dispose();
+    _mensajeInicialController.dispose();
     super.dispose();
   }
 }
